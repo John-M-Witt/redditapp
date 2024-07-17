@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search } from '../features/search/Search';
 import { SideBarNav } from '../features/sideBarNav/SideBarNav';
+import { Posts } from '../features/posts/Posts';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <section> 
         <Search></Search>
         <SideBarNav></SideBarNav>
+        <Posts></Posts>
 
       </section>
 
