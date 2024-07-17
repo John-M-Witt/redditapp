@@ -1,6 +1,6 @@
 import React from 'react';
-import redditJrIcon from '../../assets/images/redditJr.jpg';
-import searchIcon from '../../assets/images/search.jpg';
+import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
+import searchIcon from '../../assets/images/headerIcons/search.jpg';
 import styles from './search.module.css';
 
 
@@ -19,7 +19,7 @@ export function Search() {
                     <input placeholder="Search" type="text" name="searchTerm">
                     </input>
                 </form>
-                <img className={styles.searchIcon} src={searchIcon}/>                
+                <img className={styles.searchIcon} src={searchIcon} alt='Search Icon'/>                
             </div>
             
         </div>

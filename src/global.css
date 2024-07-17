@@ -6,7 +6,11 @@ body {
     padding: 0px;
     background-color: #3B59F4;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;        
+    font-family: 'Roboto', sans-serif;  
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;  
+    padding: 0rem;    
 }
 
 h1 {
