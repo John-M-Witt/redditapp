@@ -1,4 +1,4 @@
-function importSideBarIcons(r) {
+function importSidebarIcons(r) {
     let images = {};
   
     r.keys().map((item, index) => {
@@ -13,6 +13,7 @@ function importSideBarIcons(r) {
     return images;
   }
 
-const sideBarIcons = importSideBarIcons(require.context('./images/subReddits', false, /\.(png|jpe?g|svg)$/));
+const sidebarIcons = importSidebarIcons(require.context('../../../assets/images/subReddits', false, /\.(png|jpe?g|svg)$/));
 
-export default sideBarIcons; 
+export default sidebarIcons; 
+

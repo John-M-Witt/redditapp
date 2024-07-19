@@ -1,19 +1,19 @@
 import React from 'react';
-import styles from './sideBarNav.module.css';
-import sideBarIcons from '../../assets/importSideBarIcons';
+import styles from './sidebarNav.module.css';
+import sidebarIcons from './importSidebarIcons';
 
 
-export function SideBarNav () {
+export function SidebarNav () {
        
     return (
-        <div className={styles.sideBarNav}>
-            <p className={styles.navTitle}>Sub-Reddit</p>
+        <div className={styles.sidebarNav}>
+            <p className={styles.navTitle}>Sub-Reddits</p>
             <br/>
             <div>
-                {Object.keys(sideBarIcons).map((key, index) => (
+                {Object.keys(sidebarIcons).map((key, index) => (
                     <div className={styles.navItems} key={index}>
-                    <img className={styles.navIcons} src={sideBarIcons[key].path} alt={sideBarIcons[key].title}/>
-                    <p className={styles.navLinks}>{sideBarIcons[key].title}</p>
+                        <img className={styles.navIcons} src={sidebarIcons[key].path} alt={sidebarIcons[key].title}/>
+                        <p className={styles.navLinks}>{sidebarIcons[key].title}</p>
                     </div>
             ))}
             </div>
