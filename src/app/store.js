@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchTermReducer from '../features/search/searchSlice';
+import redditSlice from '../features/RedditPosts/redditSlice';
 
 const store = configureStore({
     reducer: {
-        searchTerm: searchTermReducer
+        posts: redditSlice
     }
 })
 

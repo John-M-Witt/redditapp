@@ -27,7 +27,18 @@ h1 {
     display: flex;
     align-items: center;
     margin-right: 1rem;
-   }
+    }
+
+.searchBox {
+    display: flex;
+    border: 1px black solid;
+    background-color: #E8E8E8;
+    margin-right: 1rem;
+    border-radius: 0.625rem;
+    height:2rem;
+    width: 25rem;
+    }
+    
 
 input[type="text"] {
     border: none;
@@ -36,14 +47,12 @@ input[type="text"] {
     margin-top: 0.5rem;
     background-color: #E8E8E8;
     font-size: 1rem;
+    margin-bottom: 4px;
 } 
 
-.searchBox {
-    border: 1px black solid;
-    background-color: #E8E8E8;
-    margin-right: 1rem;
-    border-radius: 0.625rem;
-    height:2rem;
-    width: 25rem;
+.deleteButton {
+   margin-left: auto;
+   margin-right: 1rem;
+   border: none;
+   background-color: #E8E8E8;
 }
-

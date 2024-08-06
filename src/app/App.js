@@ -1,18 +1,16 @@
 import React from 'react';
-import { Search } from '../features/search/Search';
-import { MainLayout } from '../features/mainLayout/MainLayout';
+import { Header } from '../features/Header/Header';
 
 function App() {
   
-
   return (
-    <main>
-      <section> 
-        <Search></Search>
-        <MainLayout></MainLayout>
-      </section>
-
-    </main>
+    <Header />
+    // <main>
+    //   <RedditPosts />
+    //   <aside>
+    //   <Subredddits />
+    //   </aside>
+    // </main>
   );
 }
 
