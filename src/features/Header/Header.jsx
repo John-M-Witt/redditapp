@@ -4,32 +4,25 @@ import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
 import searchIcon from '../../assets/images/headerIcons/search.jpg';
 import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.jpg';
 import styles from './header.module.css';
-import {
-    setPosts,
-    setSearchTerm,
-    deleteSearchTerm,
-    getSelectedSubreddit,
-    retrievingPosts,
-    getPostsSuccess,
-    getPostsFailed
-
-} from '../RedditPosts/redditSlice';
+import { setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditSlice';
 
 export function Header() {
     const [localSearchTerm, setLocalSearchTerm] = useState('');
 
+    const dispatch = useDispatch();
+
     const handleSearchTermChange = (e) => {
         setLocalSearchTerm(e.target.value);
     }
-    const dispatch = useDispatch();
-
+    
     useEffect(() => {
         dispatch(setSearchTerm(localSearchTerm))
-    },[localSearchTerm]
+    },[localSearchTerm, dispatch]
     );
 
     const handleDeleteSearchTerm = () => {
-        dispatch(deleteSearchTerm)
+        setLocalSearchTerm('');
+        dispatch(deleteSearchTerm());
     }
 
     return (
@@ -52,11 +45,9 @@ export function Header() {
                     <button className={styles.deleteButton}
                         type='button'
                         id="search-delete-button"
-                    >
-                        <img 
-                        src={deleteSearchTermIcon} 
                         onClick={handleDeleteSearchTerm}
-                        />    
+                    >
+                        <img src={deleteSearchTermIcon} />    
                     </button> 
                 )}
                 </form>

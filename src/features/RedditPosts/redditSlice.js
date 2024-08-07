@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getSubredditPosts } from '../../Api/redditApi';
 
 const redditSlice = 
     createSlice({

@@ -1,16 +1,14 @@
 import React from 'react';
 import { Header } from '../features/Header/Header';
+import { Subreddits } from '../features/Subreddits/Subreddits';
 
 function App() {
   
   return (
-    <Header />
-    // <main>
-    //   <RedditPosts />
-    //   <aside>
-    //   <Subredddits />
-    //   </aside>
-    // </main>
+    <div>
+      <Header />
+      <Subreddits />
+    </div>
   );
 }
 
