@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getSubredditPosts } from '../../Api/redditApi';
 
 const redditSlice = 
@@ -52,6 +52,7 @@ const redditSlice =
         getPostsFailed
     } = redditSlice.actions;
 
-// Add Redux thunk to get posts from a subreddit
+
+
 
 

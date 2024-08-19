@@ -5,7 +5,7 @@ import SubredditsSlice from '../features/Subreddits/subredditsSlice';
 const store = configureStore({
     reducer: {
         posts: redditSlice,
-        sideBarNav:  SubredditsSlice
+        subreddits:  SubredditsSlice
     }
 })
 
