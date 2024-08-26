@@ -1,47 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getSubreddits } from '../../Api/redditApi'
+import { getSubredditsApi } from '../../Api/redditApi';
 
 const subredditsSlice = createSlice({
     name: 'subreddits',
     initialState: {
         subreddits: [],
-        startGetSubreddits: false,
-        getSubredditsSuccess: false,
-        getSubredditsFailed: false
+        isLoadingSubreddits: false,
+        failedToLoadSubreddits: false
     },
-    reducers: {
-        loadingSubreddits: (state) => {
-            state.startGetSubreddits = true;
-        },
-        loadSubredditsSuccess: (state, action) => {
-            state.subreddits = action.payload;
-            state.getSubredditsSuccess = true;
-        },
-        loadSubredditsFailure: (state) => {
-            state.getSubredditsFailed = true;
-        }
+    
+    extraReducers: (builder) => {
+        builder
+            .addCase(getSubredditsApi.pending, state => {
+                state.isLoadingSubreddits = true;
+                state.failedToLoadSubreddits = false;
+            })
+            .addCase(getSubredditsApi.fulfilled, (state, action) => {
+                state.subreddits = action.payload;
+                state.isLoadingSubreddits = false;
+                state.failedToLoadSubreddits = false;
+            })
+            .addCase(getSubredditsApi.rejected, state => {
+                state.failedToLoadSubreddits = true;
+            });
     }
-})
+});
+             
 
 export default subredditsSlice.reducer;
 
-export const{
-    loadingSubreddits,
-    loadSubredditsSuccess,
-    loadSubredditsFailure
-} = subredditsSlice.actions;
+//Selectors
+export const selectSubreddits = state => state.subreddits.subreddits;
+export const failedToLoadSubreddits = state => state.subreddits.failedToLoadSubreddits;
+export const selectedSubreddit = state => state.subreddits.selectedSubreddit;
 
-// Add Redux thunk to get posts from a subreddit
-export const fetchSubreddits = () => async (dispatch) => {
-    try {
-        dispatch(loadingSubreddits());
-        const subreddits = await getSubreddits();
-        dispatch(loadSubredditsSuccess(subreddits));
-    } catch(error) {
-        dispatch(loadSubredditsFailure());
-    }
-}
 
-//Selector
-export const selectSubreddits = (state) => state.subreddits.subreddits;
+// Export action creators
 
+export const { setSelectedSubreddit } = subredditsSlice.actions;

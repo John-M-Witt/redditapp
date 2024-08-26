@@ -4,7 +4,7 @@ import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
 import searchIcon from '../../assets/images/headerIcons/search.jpg';
 import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.jpg';
 import styles from './header.module.css';
-import { setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditSlice';
+import { setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
 
 export function Header() {
     const [localSearchTerm, setLocalSearchTerm] = useState('');
