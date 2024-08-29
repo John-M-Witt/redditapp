@@ -27,12 +27,12 @@ export function RedditPosts() {
     
     useEffect(() => {
     dispatch(getSubredditPostsApi(selectedSubredditPath));
+    console.log(posts);
     }, [selectedSubredditPath, dispatch]
     );
 
     const posts = useSelector(subredditPosts);   
-    console.log(posts);
-
+    
     const onHoverTooltip = () => setTooltipVisible(true);
     const noHoverTooltip = () => setTooltipVisible(false); 
     
@@ -70,7 +70,7 @@ export function RedditPosts() {
                             <table>    
                                 <tbody>
                                     <tr>
-                                        <td><img src={post.upvote_ratio > .50 ? arrowUp : arrowDown} /> </td>
+                                        <td><img src={post.upvote_ratio > .50 ? arrowUp : arrowDown} alt={post.upvote_ratio > .50 ? "Up votes exceed down votes" : "Down votes exceed up votes" } /> </td>
                                         {/* The second half of the formula below calculates the number of down votes*/}
                                         <td>{numberWithCommas(post.ups - (Math.round(post.ups / post.upvote_ratio) - post.ups )) }</td> 
                                     </tr>
@@ -87,15 +87,15 @@ export function RedditPosts() {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><img src={arrowUp} /> </td>
+                                        <td><img src={arrowUp} alt="Number of up votes"/> </td>
                                         <td>{numberWithCommas(post.ups)}</td> 
                                     </tr>
                                     <tr>
-                                        <td><img src={arrowDown} /></td>
+                                        <td><img src={arrowDown} alt="Number of down votes"/></td>
                                         <td className={styles.underline}>{numberWithCommas((Math.round(post.ups / post.upvote_ratio) - post.ups ))}</td>
                                     </tr>
                                     <tr>
-                                        <td> <img src={post.upvote_ratio > 0.5? arrowUp : arrowDown } /></td>
+                                        <td> <img src={post.upvote_ratio > 0.5? arrowUp : arrowDown} alt={post.upvote_ratio > 0.5? "Up votes exceed down votes by": "Down votes exceed up votes by"}  /></td>
                                         <td>{numberWithCommas((post.ups - (Math.round(post.ups / post.upvote_ratio) - post.ups)))}</td>
                                     </tr>
                                 </tbody>
@@ -115,20 +115,37 @@ export function RedditPosts() {
                             </table>
                         </div>
                            
+                        {post.media === null?
+                        (
                         <div id={styles.postContent}>
                             <p className={styles.postTitle}>{post.title}</p>
                             <div className={styles.imageContainer}>
-                                {post.url ? <img className={styles.postImage} src={post.url} /> : <p>Image not available</p>}
+                                <img className={styles.postImage} src={post.url}/>
                             </div>
                         </div>
+                        ):
+                        (
+                        <div id={styles.postContent}>
+                            <p className={styles.postTitle}>{post.title}</p>
+                            <div className={styles.videoContainer}>
+                                <video 
+                                    className={styles.video} 
+                                    src={post.media.reddit_video.dash_url} 
+                                    controls
+                                    >
+                                </video>
+                            </div>
+                        </div>
+                        )};
+                        <div className={styles.postFooter}>
+                            <p>Test</p>
+                        </div>
                     </div>
-                ))}
+                    ))
+                }
             </div>
-        )
-    }
-}
-                
-
-        
-         
-      
+            )
+        }
+    }    
+                    
+     
