@@ -6,7 +6,7 @@
    box-shadow: 0.375rem 0.375rem 0.25rem rgb( 0 0 0 / 35%);
    justify-content:space-between;
    font-family: 'Roboto';
-   }
+    }
 
 .titleIconContainer{
     display: flex;
