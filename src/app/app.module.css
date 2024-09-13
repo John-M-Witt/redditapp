@@ -1,0 +1,23 @@
+
+/*Enables side-by-side placement of subreddits sidebar and posts rendered in App. Align items moves the subreddit links to the top to reduce the size of the container to the contents  */
+#flexContainer{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Subreddits should take a fixed size on the left */
+.subreddits {
+    flex: 0 0 250px; /* 0 grow, 0 shrink, 250px width */
+    max-width: 250px;
+  }
+  
+  /* RedditPosts should take the rest of the available space */
+  .redditPosts {
+    flex: 1 1 500px; /* Allow to grow and shrink as needed */
+    min-width: 0; /* Prevent overflowing */
+    max-width: 100%;
+    overflow-wrap: break-word; /* Ensure text wraps */
+    word-wrap: break-word; /* For older browsers */
+    min-width: 0rem;
+  }

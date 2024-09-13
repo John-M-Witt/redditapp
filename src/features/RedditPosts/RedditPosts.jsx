@@ -3,54 +3,66 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import arrowUp from '../../assets/images/posts/doubleArrowUp.svg';
 import arrowDown from '../../assets/images/posts/doubleArrowDown.svg';
-import infoIcon from '../../assets/images/posts/info.svg'
-import { subredditPosts, subredditPath, searchTerm, loadPostsFailed } from './redditPostsSlice';
-import { getSubredditPostsApi } from'../../Api/redditApi';
+import infoIcon from '../../assets/images/posts/info.svg';
+import commentIcon from '../../assets/images/posts/comment.svg';
+import { redditPosts, subredditPath, loadPostsFailed, searchTerm, isNewSearch, setNewSearch } from './redditPostsSlice';
+import { getSubredditPostsApi, getSearchPostsApi } from'../../Api/redditApi';
+import { timeSincePost, numberWithCommas, }  from '../../utilities/utilities';
 
 
 export function RedditPosts() {
-   const [tooltipVisible, setTooltipVisible ] = useState(false);
    
-    const dispatch = useDispatch();
+    const [tooltipVisible, setTooltipVisible ] = useState(false);
 
-    //Required for subreddit Posts
+   const dispatch = useDispatch();
+
+    //Required for subreddit link posts
     const selectedSubredditPath = useSelector(subredditPath);
     const errorLoadingPosts = useSelector(loadPostsFailed);
 
-    //Required for search
+    //Posts data based on search and subreddit links
     const searchPhrase = useSelector(searchTerm);
-
-    //Adds commas for numbers > 1,000
-    function numberWithCommas(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    
-    useEffect(() => {
-    dispatch(getSubredditPostsApi(selectedSubredditPath));
+    const newSearch = useSelector(isNewSearch);
+    const posts = useSelector(redditPosts); 
     console.log(posts);
-    }, [selectedSubredditPath, dispatch]
-    );
 
-    const posts = useSelector(subredditPosts);   
-    
+    useEffect(() => {
+        dispatch(getSubredditPostsApi(selectedSubredditPath));
+        }, [selectedSubredditPath, dispatch]
+        );
+
+    useEffect(() => {
+        if(newSearch === false) {
+            return;
+        } 
+        dispatch(getSearchPostsApi(searchPhrase));
+        dispatch(setNewSearch(false));
+        }, [searchPhrase, dispatch])
+
     const onHoverTooltip = () => setTooltipVisible(true);
     const noHoverTooltip = () => setTooltipVisible(false); 
     
-    if(errorLoadingPosts === true) {
-        return (
+    
+    return (
+        <div className={styles.postContainer}>
+        {(errorLoadingPosts) && 
+        
             <div className={styles.post}>
-                <p className={styles.errorMessage}>Error loading posts </p>
+                <p className={styles.errorMessage}>Error loading posts!</p>
+                <p className={styles.errorMessage}>Please select another option.</p>
             </div>
-        )
-    } else {
-        return (
+            }
+        
             <div>
-                {posts.map((post) => (
-                    <div id={styles.postContainer} key={post.id}  > 
+                {posts.map(post => (
+                <div className={styles.post}  key={post.id}>
+                    <div className={styles.postContent}> 
+                        
+                        {/* Post Metrics Section*/}
                         <div className={styles.postStatsSection}> 
                             <p id={styles.postStatsHeader}>Post Votes</p>
 
-                            <div className={styles.subheaderDefinition}
+                            <div className={styles.tooltip}
                                 onMouseEnter={onHoverTooltip}
                                 onMouseLeave={noHoverTooltip}
                             >
@@ -63,7 +75,7 @@ export function RedditPosts() {
                                     />    
                                     <span
                                         className={styles.tooltipText}
-                                        style={{ display: tooltipVisible ? 'inline-block' : 'none'}}> Net votes = positive - negative votes 
+                                        style={{ display: tooltipVisible ? 'inline-block' : 'none'}}> Net votes = positive votes - negative votes 
                                     </span>
                             </div>
 
@@ -114,38 +126,75 @@ export function RedditPosts() {
                                 </tbody>
                             </table>
                         </div>
-                           
-                        {post.media === null?
-                        (
-                        <div id={styles.postContent}>
-                            <p className={styles.postTitle}>{post.title}</p>
-                            <div className={styles.imageContainer}>
-                                <img className={styles.postImage} src={post.url}/>
+                    
+                        {/* Post content section*/}
+
+                        {/* Type of media available determines if image, video or just text is displayed*/}
+                        
+                        <div className={styles.postContent}>
+                            
+                            {post.selftext_html !==null && (
+                            <div>
+                                <p className={styles.postTitle}>{post.title}</p>
+                                <div className={styles.textContainer}>
+                                    <p>{post.selftext}</p> 
+                                </div>
                             </div>
-                        </div>
-                        ):
-                        (
-                        <div id={styles.postContent}>
-                            <p className={styles.postTitle}>{post.title}</p>
-                            <div className={styles.videoContainer}>
-                                <video 
-                                    className={styles.video} 
-                                    src={post.media.reddit_video.dash_url} 
-                                    controls
-                                    >
-                                </video>
+                            )}
+
+                            {post.media !== null && (  
+                            <div>
+                                <p className={styles.postTitle}>{post.title}</p>
+                                <div>
+                                    <video 
+                                        id={styles.postMedia}
+                                        preload="auto"
+                                        controls>Your web browser does not support the video type.
+                                        <source 
+                                            src={post.media?.reddit_video?.fallback_url}
+                                            type="video/mp4"
+                                        >
+                                        </source>
+                                        <source
+                                            src={post.media?.reddit_video?.scrubber_media_url}
+                                            type="video/mpd"
+                                        >
+                                        </source>
+                                    </video>
+                                </div>
                             </div>
-                        </div>
-                        )};
-                        <div className={styles.postFooter}>
-                            <p>Test</p>
+                                )
+                            }
+
+                            {(post.selftext_html === null && post.media === null) && (
+                            <div>
+                                <p className={styles.postTitle}>{post.title}</p>
+                                <div>
+                                    <img className={styles.postImage} src={post.url.includes('jpeg')? post.url : null}/>
+                                </div>
+                            </div>
+                            )}
                         </div>
                     </div>
-                    ))
-                }
+                
+                    {/* Footer at bottom of each post */}
+
+                        <div className={styles.postFooterContainer}>
+                        <p>Subreddit: {post.subreddit}</p>
+                        <p>Author: {post.author}</p>
+                        <p>{timeSincePost(post.created)}</p>
+                                <div className={styles.commentContainer}>
+                                    <img src={commentIcon} alt="Total post comments" /> 
+                                    <p className={styles.totalComments}>{numberWithCommas(post.num_comments)}</p>
+                                </div>
+                        </div>
+                    </div>
+                )
+            )}
             </div>
-            )
-        }
-    }    
-                    
-     
+            </div>
+    );
+}
+ 
+
+

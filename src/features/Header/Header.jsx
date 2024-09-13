@@ -1,24 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
 import searchIcon from '../../assets/images/headerIcons/search.jpg';
 import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.jpg';
 import styles from './header.module.css';
-import { setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
+import { searchTerm, setNewSearch, setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
+import { formatSearchPhrase } from '../../utilities/utilities';
 
 export function Header() {
     const [localSearchTerm, setLocalSearchTerm] = useState('');
 
     const dispatch = useDispatch();
 
+    const searchPhrase = useSelector(searchTerm);
+
+
     const handleSearchTermChange = (e) => {
         setLocalSearchTerm(e.target.value);
     }
     
-    useEffect(() => {
-        dispatch(setSearchTerm(localSearchTerm))
-    },[localSearchTerm, dispatch]
-    );
+    const handleSearchEnter = e => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            console.log(searchPhrase);
+            dispatch(setNewSearch(true));
+            const formattedSearchPhrase = formatSearchPhrase(localSearchTerm);
+            dispatch(setSearchTerm(formattedSearchPhrase));
+            setLocalSearchTerm('');
+        }
+    } 
 
     const handleDeleteSearchTerm = () => {
         setLocalSearchTerm('');
@@ -32,13 +42,14 @@ export function Header() {
                 <h1>Reddit Jr. </h1>
             </div>
             <div className={styles.searchContainer}>
-                <form className={styles.searchBox}> 
+                <form className={styles.searchBox} onSubmit={(e) => e.preventDefault()}> 
                     <input 
                         placeholder="Search" 
                         type="text" 
                         name='localSearchTerm'
                         value={localSearchTerm}
                         onChange={handleSearchTermChange}
+                        onKeyDown={handleSearchEnter}
                     >
                     </input>
                 {localSearchTerm.length > 2 && (

@@ -4,7 +4,9 @@
     box-shadow: 0.375rem 0.375rem 0.25rem rgb( 0 0 0 / 35%);
     font-family: 'Roboto';
     margin-top: 1rem;
+    margin-right: 1rem;
     padding-right: 1rem;
+    flex: 0 1 auto;
 }
 
 .sidebarNavItems{
@@ -12,6 +14,7 @@
 }
 
 .header {
+    margin-top: 1rem;
     margin-bottom: 2rem;
     margin-left: 1rem;
     font-weight: 500;
@@ -21,6 +24,7 @@
 .subredditContainer{
     display: flex;
     margin-bottom: 1.5rem; 
+    align-items: center;
       
     }
 

@@ -49,8 +49,8 @@ export function Subreddits () {
                             >{subreddit.display_name}</p>
                         </div>
                     </li>
-                 })}
-            </ul>
+                })}
+                </ul>
             </div>
         </div>
     )}}
