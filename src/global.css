@@ -26,3 +26,9 @@ p {
     margin: 0rem 0rem;
 }
 
+/*Enables side-by-side placement of subreddits sidebar and posts rendered in App. Align items moves the subreddit links to the top to reduce the size of the container to the contents  */
+#flexContainer{
+    display: flex;
+    align-items: flex-start;
+}
+

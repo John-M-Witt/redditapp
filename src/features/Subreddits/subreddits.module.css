@@ -6,7 +6,20 @@
     margin-top: 1rem;
     margin-right: 1rem;
     padding-right: 1rem;
-    flex: 0 1 auto;
+}
+
+.subredditsContainerError {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.subredditsContainerError p {
+    font-Weight: 600;
+    color: red;
+    margin-left: 1rem;
+    font-size: 2rem;
 }
 
 .sidebarNavItems{
@@ -25,8 +38,7 @@
     display: flex;
     margin-bottom: 1.5rem; 
     align-items: center;
-      
-    }
+}
 
 .subredditContainer:hover {
     cursor: pointer;

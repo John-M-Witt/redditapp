@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
-import searchIcon from '../../assets/images/headerIcons/search.jpg';
-import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.jpg';
+import searchIconBlack from '../../assets/images/headerIcons/searchIconBlack.svg';
+import searchIconGreen from '../../assets/images/headerIcons/searchIconGreen.svg';
+import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.svg';
 import styles from './header.module.css';
-import { searchTerm, setNewSearch, setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
+import { setNewSearch, setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
 import { formatSearchPhrase } from '../../utilities/utilities';
 
 export function Header() {
     const [localSearchTerm, setLocalSearchTerm] = useState('');
 
     const dispatch = useDispatch();
-
-    const searchPhrase = useSelector(searchTerm);
-
+    const localSearchTermLength = localSearchTerm.length; 
 
     const handleSearchTermChange = (e) => {
         setLocalSearchTerm(e.target.value);
@@ -22,13 +21,23 @@ export function Header() {
     const handleSearchEnter = e => {
         if(e.key === 'Enter') {
             e.preventDefault();
-            console.log(searchPhrase);
+            console.log(e);
             dispatch(setNewSearch(true));
             const formattedSearchPhrase = formatSearchPhrase(localSearchTerm);
             dispatch(setSearchTerm(formattedSearchPhrase));
             setLocalSearchTerm('');
         }
     } 
+
+const handleSearchIconClick = (e) => {
+    if(localSearchTerm.length > 1){
+        e.preventDefault();
+        dispatch(setNewSearch(true));
+        const formattedSearchPhrase = formatSearchPhrase(localSearchTerm);
+        dispatch(setSearchTerm(formattedSearchPhrase));
+        setLocalSearchTerm('');
+    }
+}
 
     const handleDeleteSearchTerm = () => {
         setLocalSearchTerm('');
@@ -53,7 +62,8 @@ export function Header() {
                     >
                     </input>
                 {localSearchTerm.length > 2 && (
-                    <button className={styles.deleteButton}
+                    <button 
+                        className={styles.deleteButton}
                         type='button'
                         id="search-delete-button"
                         onClick={handleDeleteSearchTerm}
@@ -62,7 +72,13 @@ export function Header() {
                     </button> 
                 )}
                 </form>
-                <img src={searchIcon} alt='Search Icon'/>                
+                <img 
+                    className={styles.searchIcon} 
+                    src={localSearchTermLength < 1? searchIconBlack: searchIconGreen} 
+                    alt='Search Icon'
+                    onClick={handleSearchIconClick}
+                     
+                />                
             </div>
             
         </header>

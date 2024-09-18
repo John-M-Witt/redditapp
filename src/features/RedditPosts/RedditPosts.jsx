@@ -7,7 +7,7 @@ import infoIcon from '../../assets/images/posts/info.svg';
 import commentIcon from '../../assets/images/posts/comment.svg';
 import { redditPosts, subredditPath, loadPostsFailed, searchTerm, isNewSearch, setNewSearch } from './redditPostsSlice';
 import { getSubredditPostsApi, getSearchPostsApi } from'../../Api/redditApi';
-import { timeSincePost, numberWithCommas, }  from '../../utilities/utilities';
+import { timeSincePost, numberWithCommas }  from '../../utilities/utilities';
 
 
 export function RedditPosts() {
@@ -49,7 +49,7 @@ export function RedditPosts() {
         
             <div className={styles.post}>
                 <p className={styles.errorMessage}>Error loading posts!</p>
-                <p className={styles.errorMessage}>Please select another option.</p>
+                <p className={styles.errorMessage}>Select another option.</p>
             </div>
             }
         
@@ -147,7 +147,7 @@ export function RedditPosts() {
                                 <p className={styles.postTitle}>{post.title}</p>
                                 <div>
                                     <video 
-                                        id={styles.postMedia}
+                                        className={styles.postMedia}
                                         preload="auto"
                                         controls>Your web browser does not support the video type.
                                         <source 
@@ -157,7 +157,7 @@ export function RedditPosts() {
                                         </source>
                                         <source
                                             src={post.media?.reddit_video?.scrubber_media_url}
-                                            type="video/mpd"
+                                            type="video/mp4"
                                         >
                                         </source>
                                     </video>
@@ -166,22 +166,46 @@ export function RedditPosts() {
                                 )
                             }
 
-                            {(post.selftext_html === null && post.media === null) && (
+                            {(post.selftext_html === null && post.media === null && post.crosspost_parent_list === undefined) && (
                             <div>
                                 <p className={styles.postTitle}>{post.title}</p>
                                 <div>
-                                    <img className={styles.postImage} src={post.url.includes('jpeg')? post.url : null}/>
+                                    <img className={styles.postImage} src={post.url.includes('jpeg') || post.url.includes('png') ? post.url : null}/>
                                 </div>
                             </div>
                             )}
+
+                            {post.crosspost_parent_list !== undefined && (
+                            <div>
+                                 <p className={styles.postTitle}>{post.title}</p>
+                                <div>
+                                    <video 
+                                        className={styles.postMedia}
+                                        preload="auto"
+                                        controls>Your web browser does not support the video type.
+                                        <source 
+                                            src={post.crosspost_parent_list?.[0]?.media?.reddit_video?.fallback_url}
+                                            type="video/mp4"
+                                        >
+                                        </source>
+                                        <source
+                                            src={post.crosspost_parent_list?.[0]?.media?.reddit_video?.scrubber_media_url}
+                                            type="video/mp4"
+                                        >
+                                        </source>
+                                    </video>
+                                </div>
+                            </div>
+                            )}                
+
                         </div>
                     </div>
                 
                     {/* Footer at bottom of each post */}
 
                         <div className={styles.postFooterContainer}>
-                        <p>Subreddit: {post.subreddit}</p>
-                        <p>Author: {post.author}</p>
+                        <p>{post.subreddit}</p>
+                        <p>{post.author}</p>
                         <p>{timeSincePost(post.created)}</p>
                                 <div className={styles.commentContainer}>
                                     <img src={commentIcon} alt="Total post comments" /> 

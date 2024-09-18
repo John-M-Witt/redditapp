@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './subreddits.module.css';
-import { selectSubreddits, failedToLoadSubreddits, setSelectedSubreddit } from './subredditsSlice';
-import { getSubredditsApi  } from '../../Api/redditApi';
+import { selectSubreddits, failedToLoadSubreddits } from './subredditsSlice';
+import { getSubredditsApi } from '../../Api/redditApi';
 import { setSelectedSubredditPath } from '../RedditPosts/redditPostsSlice';
 
 export function Subreddits () {
@@ -17,17 +17,14 @@ export function Subreddits () {
     
     const handleSubredditClick = subredditPath => dispatch(setSelectedSubredditPath(subredditPath));
 
-    if(subredditLoadFailed === true) {
-        return (
-            <div className={styles.subredditsContainer}>
-                <div className={styles.subredditContainer}>
-                    <p style={{fontWeight: 600, color:'red', marginLeft: '1rem'}}>Error loading Sub-Reddit Names</p>
+    return (
+        subredditLoadFailed ? (
+            <div className={`${styles.subredditsContainer} ${styles.subredditsContainerError}`}> 
+                <div className={`${styles.subredditContainer} ${styles.subredditContainerError}`}>
+                    <p>Error loading Communities!</p>
                 </div>
             </div>
-        );
-    } else { 
-
-    return (
+        ) : (
         <div className={styles.subredditsContainer}>
             <div className={styles.sidebarNavItems} >
                 <p className={styles.header}>Sub-Reddits</p>
@@ -53,6 +50,6 @@ export function Subreddits () {
                 </ul>
             </div>
         </div>
-    )}}
-
-   
+        )
+    )
+}
