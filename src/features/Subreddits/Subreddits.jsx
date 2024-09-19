@@ -26,12 +26,14 @@ export function Subreddits () {
             </div>
         ) : (
         <div className={styles.subredditsContainer}>
-            <div className={styles.sidebarNavItems} >
-                <p className={styles.header}>Sub-Reddits</p>
+            <div className={styles.sidebarNavItems} > 
+                <p className={styles.header}>Reddit Communities</p>
                 <ul>
                 {subreddits.map(subreddit => {
                     return <li key={subreddit.id}>
-                        <div className={styles.subredditContainer}> 
+                        <div className={styles.subredditContainer}> {/*Flex box*/}
+ 
+                            {/*Flex item*/}
                             <button> 
                                 <img 
                                     className={styles.icons} 
@@ -40,10 +42,12 @@ export function Subreddits () {
                                     onClick = {() => handleSubredditClick(subreddit.url)}
                                 />
                             </button>
+
+                            {/*Flex item*/}
                             <p 
                                 className={styles.title}
                                 onClick = {() => handleSubredditClick(subreddit.url)}
-                            >{subreddit.display_name}</p>
+                            >{subreddit.display_name}</p> 
                         </div>
                     </li>
                 })}

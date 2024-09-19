@@ -198,14 +198,14 @@ export function RedditPosts() {
                             </div>
                             )}                
 
-                        </div>
+                        </div> 
                     </div>
                 
                     {/* Footer at bottom of each post */}
 
                         <div className={styles.postFooterContainer}>
-                        <p>{post.subreddit}</p>
-                        <p>{post.author}</p>
+                        <p>Community: {post.subreddit}</p>
+                        <p>Author: {post.author}</p>
                         <p>{timeSincePost(post.created)}</p>
                                 <div className={styles.commentContainer}>
                                     <img src={commentIcon} alt="Total post comments" /> 

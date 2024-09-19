@@ -114,6 +114,8 @@ td{
 
 .postFooterContainer{
     display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     justify-content: space-between;
     margin-top: 2rem;
     margin-left: 7.25rem;
@@ -135,4 +137,3 @@ td{
 .postFooterContainer p {
     text-align: top;
 }
-

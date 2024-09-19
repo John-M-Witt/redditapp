@@ -45,13 +45,13 @@ const handleSearchIconClick = (e) => {
     }
 
     return (
-        <header id={styles.headerContainer}>
-            <div className={styles.titleIconContainer}>
-                <img className={styles.appIcon} alt='app icon' src={redditJrIcon}/>
-                <h1>Reddit Jr. </h1>
+        <header id={styles.headerContainer}> {/* Flex box */}
+            <div className={styles.titleIconContainer}> {/* Flex item & Flex box */}
+                <img className={styles.appIcon} alt='Subreddit icon' src={redditJrIcon}/>
+                <h1>Reddit Jr.</h1>
             </div>
-            <div className={styles.searchContainer}>
-                <form className={styles.searchBox} onSubmit={(e) => e.preventDefault()}> 
+            <div className={styles.searchContainer}> {/* Flex item & Flex box */}
+                <form className={styles.searchBox} onSubmit={(e) => e.preventDefault()}> {/* Flex item & Flex box */}
                     <input 
                         placeholder="Search" 
                         type="text" 
