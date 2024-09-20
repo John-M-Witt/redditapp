@@ -21,14 +21,20 @@ export function timeSincePost (unixTimeStamp) {
     const yearsSincePosted = Math.round((millisecondsSincePost/(1000*60*60*24*365)));  
     //console.log(`Years since posted: ${yearsSincePosted} `);
 
-    if (minutesSincePosted < 60 ) {
-        return `Posted ${minutesSincePosted} minutes ago.`;
+    if (minutesSincePosted === 1) {
+        return `Posted ${minutesSincePosted} minute ago`;
+    } else if (minutesSincePosted > 1 && minutesSincePosted < 60) {
+        return `Posted ${minutesSincePosted} minutes ago`;
     } else if (minutesSincePosted === 60) {
         return `Posted ${hoursSincePosted} hour ago`;
-    } else if (minutesSincePosted > 60 && minutesSincePosted <= (60*24)) {
+    } else if (minutesSincePosted > 60 && minutesSincePosted < (60*24)) {
         return `Posted ${hoursSincePosted} hours ago`;
-    } else if(minutesSincePosted > (60*24) && minutesSincePosted <= (60*24*365)){  // Min > Greater than 24 hours and less than or equal to 1 year 
+    } else if(minutesSincePosted === (60*24)){
+        return `Posted ${daysSincePosted} day ago`;
+    } else if(minutesSincePosted > (60*24) && minutesSincePosted < (60*24*365)){  // Min > Greater than 24 hours and less than or equal to 1 year 
         return `Posted ${daysSincePosted} days ago`; 
+    } else if(minutesSincePosted === (60*24*365)){
+        return `Posted ${yearsSincePosted} year ago`; 
     } else {
         return `Posted ${yearsSincePosted} years ago`;
     } 
