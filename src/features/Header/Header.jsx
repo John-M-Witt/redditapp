@@ -21,7 +21,7 @@ export function Header() {
     const handleSearchEnter = e => {
         if(e.key === 'Enter') {
             e.preventDefault();
-            console.log(e);
+            // console.log(e);
             dispatch(setNewSearch(true));
             const formattedSearchPhrase = formatSearchPhrase(localSearchTerm);
             dispatch(setSearchTerm(formattedSearchPhrase));
@@ -59,8 +59,7 @@ const handleSearchIconClick = (e) => {
                         value={localSearchTerm}
                         onChange={handleSearchTermChange}
                         onKeyDown={handleSearchEnter}
-                    >
-                    </input>
+                    />
                 {localSearchTerm.length > 2 && (
                     <button 
                         className={styles.deleteButton}
@@ -72,13 +71,14 @@ const handleSearchIconClick = (e) => {
                     </button> 
                 )}
                 </form>
-                <img 
-                    className={styles.searchIcon} 
-                    src={localSearchTermLength < 1? searchIconBlack: searchIconGreen} 
-                    alt='Search Icon'
-                    onClick={handleSearchIconClick}
-                     
-                />                
+                    <button>
+                        <img 
+                        className={styles.searchIcon} 
+                        src={localSearchTermLength < 1? searchIconBlack: searchIconGreen} 
+                        alt='Search Icon'
+                        onClick={handleSearchIconClick}
+                        />
+                    </button>     
             </div>
             
         </header>

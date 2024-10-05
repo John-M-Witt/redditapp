@@ -25,7 +25,7 @@ export function RedditPosts() {
     const newSearch = useSelector(isNewSearch);
     const posts = useSelector(redditPosts); 
     console.log(posts);
-
+    
     useEffect(() => {
         dispatch(getSubredditPostsApi(selectedSubredditPath));
         }, [selectedSubredditPath, dispatch]
@@ -37,12 +37,11 @@ export function RedditPosts() {
         } 
         dispatch(getSearchPostsApi(searchPhrase));
         dispatch(setNewSearch(false));
-        }, [searchPhrase, dispatch])
+        }, [newSearch, searchPhrase, dispatch])
 
     const onHoverTooltip = () => setTooltipVisible(true);
     const noHoverTooltip = () => setTooltipVisible(false); 
-    
-    
+
     return (
         <div className={styles.postContainer}>
         {(errorLoadingPosts) && 
@@ -117,10 +116,10 @@ export function RedditPosts() {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td className={styles.detachedArrow}><img src={arrowUp} /> </td>
+                                        <td className={styles.detachedArrow}><img src={arrowUp} alt="up arrow" /> </td>
                                     </tr>
                                     <tr>
-                                        <td className={styles.detachedArrow}><img src={arrowDown} /></td>
+                                        <td className={styles.detachedArrow}><img src={arrowDown} alt="down arrow"/></td>
                                     </tr>
                                     
                                 </tbody>
@@ -170,7 +169,7 @@ export function RedditPosts() {
                             <div>
                                 <p className={styles.postTitle}>{post.title}</p>
                                 <div>
-                                    <img className={styles.postImage} src={post.url.includes('jpeg') || post.url.includes('png') ? post.url : null}/>
+                                    <img className={styles.postImage} alt="post" src={post.url.includes('jpeg') || post.url.includes('png') ? post.url : null}/>
                                 </div>
                             </div>
                             )}

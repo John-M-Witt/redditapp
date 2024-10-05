@@ -14,6 +14,7 @@ export function Subreddits () {
     ); 
     const subredditLoadFailed = useSelector(failedToLoadSubreddits);
     const subreddits = useSelector(selectSubreddits);
+    // console.log(subreddits);
     
     const handleSubredditClick = subredditPath => dispatch(setSelectedSubredditPath(subredditPath));
 

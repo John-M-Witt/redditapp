@@ -15,6 +15,7 @@ export const getSubredditPostsApi = createAsyncThunk('posts/loadSubredditPosts',
 export const getSubredditsApi = createAsyncThunk('subreddits/getSubreddits', 
     async () => {
         const response = await fetch(`${baseUrl}/subreddits.json`);
+        // console.log(response);
         const json = await response.json();
         return json.data.children.map(subreddit => subreddit.data);
 }); 
@@ -25,7 +26,7 @@ export const getSearchPostsApi = createAsyncThunk('posts/search',
     async (searchTerm) => {
         const response = await fetch(baseUrl+searchPath+searchTerm);
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         return json.data.children.map(redditPost => redditPost.data)
         });
                 

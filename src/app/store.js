@@ -6,7 +6,6 @@ const store = configureStore({
     reducer: {
         subreddits:  SubredditsSlice,
         posts: redditPostsSlice
-        
     }
 })
 

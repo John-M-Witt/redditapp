@@ -11,7 +11,7 @@ it("Adds a comma to numbers", () => {
     });
 });
 
-//Converts JavaScript milliseconds to seconds used in Unix 
+//Converts JavaScript milliseconds to seconds used in Unix. Tests if Unix time stamp returns the correct message 
 describe("timeSincePost", () => {
   test.each([
     [Math.floor(Date.now() / 1000) - 60, "Posted 1 minute ago"], // 1 minute ago
