@@ -85,18 +85,8 @@ button:hover {
 
 
 @media only screen and (max-width: 768px) {
-   .icons {
-    display: none;
-   }
-}
-
-@media only screen and (max-width: 730px) {
-    
-    
-    
     .subredditsContainer{
         display: none;
-
     }
 }
 

@@ -4,6 +4,7 @@ import styles from './subreddits.module.css';
 import { selectSubreddits, failedToLoadSubreddits } from './subredditsSlice';
 import { getSubredditsApi } from '../../Api/redditApi';
 import { setSelectedSubredditPath } from '../RedditPosts/redditPostsSlice';
+import { communitiesVisible } from '../Header/headerSlice';
 
 export function Subreddits () {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export function Subreddits () {
     ); 
     const subredditLoadFailed = useSelector(failedToLoadSubreddits);
     const subreddits = useSelector(selectSubreddits);
-    // console.log(subreddits);
+    const displayCommunities = useSelector(communitiesVisible);
     
     const handleSubredditClick = subredditPath => dispatch(setSelectedSubredditPath(subredditPath));
 
@@ -55,6 +56,10 @@ export function Subreddits () {
                 </ul>
             </div>
         </div>
+
+
+
+
         )
     )
 }

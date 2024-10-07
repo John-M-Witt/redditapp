@@ -7,9 +7,12 @@ import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTe
 import styles from './header.module.css';
 import { setNewSearch, setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
 import { formatSearchPhrase } from '../../utilities/utilities';
+import { communitiesVisible, setCommunityVisible } from './headerSlice';
 
 export function Header() {
     const [localSearchTerm, setLocalSearchTerm] = useState('');
+
+    const displayCommunities = useSelector(communitiesVisible);
 
     const dispatch = useDispatch();
     const localSearchTermLength = localSearchTerm.length; 
@@ -44,6 +47,10 @@ const handleSearchIconClick = (e) => {
         dispatch(deleteSearchTerm());
     }
 
+    const handleCommunitiesClick = () => {
+        dispatch(setCommunityVisible(!displayCommunities));
+    }
+
     return (
         <header id={styles.headerContainer}> {/* Flex box */}
             <div className={styles.titleIconContainer}> {/* Flex item & Flex box */}
@@ -67,7 +74,7 @@ const handleSearchIconClick = (e) => {
                             id="search-delete-button"
                             onClick={handleDeleteSearchTerm}
                         >
-                            <img src={deleteSearchTermIcon} />    
+                            <img src={deleteSearchTermIcon} alt='delate search phrase' />    
                         </button> 
                 )}
                 </form>
@@ -79,7 +86,9 @@ const handleSearchIconClick = (e) => {
                     onClick={handleSearchIconClick}
                     />
                 </button>     
-                <button className={styles.communities} >
+                <button 
+                    className={styles.communities}
+                    onClick = {handleCommunitiesClick} >
                 Communities
                 </button>
             
