@@ -60,25 +60,29 @@ const handleSearchIconClick = (e) => {
                         onChange={handleSearchTermChange}
                         onKeyDown={handleSearchEnter}
                     />
-                {localSearchTerm.length > 2 && (
-                    <button 
-                        className={styles.deleteButton}
-                        type='button'
-                        id="search-delete-button"
-                        onClick={handleDeleteSearchTerm}
-                    >
-                        <img src={deleteSearchTermIcon} />    
-                    </button> 
+                    {localSearchTerm.length > 2 && (
+                        <button 
+                            className={styles.deleteButton}
+                            type='button'
+                            id="search-delete-button"
+                            onClick={handleDeleteSearchTerm}
+                        >
+                            <img src={deleteSearchTermIcon} />    
+                        </button> 
                 )}
                 </form>
-                    <button>
-                        <img 
-                        className={styles.searchIcon} 
-                        src={localSearchTermLength < 1? searchIconBlack: searchIconGreen} 
-                        alt='Search Icon'
-                        onClick={handleSearchIconClick}
-                        />
-                    </button>     
+                <button>
+                    <img 
+                    className={styles.searchIcon} 
+                    src={localSearchTermLength < 1? searchIconBlack: searchIconGreen} 
+                    alt='Search Icon'
+                    onClick={handleSearchIconClick}
+                    />
+                </button>     
+                <button className={styles.communities} >
+                Communities
+                </button>
+            
             </div>
             
         </header>

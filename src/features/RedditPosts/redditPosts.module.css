@@ -41,7 +41,7 @@
 
 #postStatsHeader{
     font-weight: 500;
-    font-size: 1rem;
+    /* font-size: 1rem; */
     padding-bottom: 1rem;
 }
 
@@ -76,7 +76,7 @@ td{
     vertical-align: middle;
     padding-bottom: 0.2rem;
     text-align: right;
-    font-size: 1rem;
+    /* font-size: 1rem; */
 }
 
 .percentSign {
