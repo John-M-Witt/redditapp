@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './subreddits.module.css';
 import { selectSubreddits, failedToLoadSubreddits } from './subredditsSlice';
@@ -7,17 +7,30 @@ import { setSelectedSubredditPath } from '../RedditPosts/redditPostsSlice';
 import { communitiesVisible } from '../Header/headerSlice';
 
 export function Subreddits () {
+    const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
+    
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getSubredditsApi());
-        }, [dispatch]
-    ); 
+       
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        
+        window.addEventListener('resize', handleResize); 
+        
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [dispatch]); 
+
     const subredditLoadFailed = useSelector(failedToLoadSubreddits);
     const subreddits = useSelector(selectSubreddits);
     const displayCommunities = useSelector(communitiesVisible);
     
     const handleSubredditClick = subredditPath => dispatch(setSelectedSubredditPath(subredditPath));
+    
 
     return (
         subredditLoadFailed ? (
@@ -27,6 +40,8 @@ export function Subreddits () {
                 </div>
             </div>
         ) : (
+        
+        (windowWidth > 768 || displayCommunities) && (
         <div className={styles.subredditsContainer}>
             <div className={styles.sidebarNavItems} > 
                 <p className={styles.header}>Reddit Communities</p>
@@ -56,10 +71,5 @@ export function Subreddits () {
                 </ul>
             </div>
         </div>
-
-
-
-
-        )
-    )
-}
+        ))
+    )}

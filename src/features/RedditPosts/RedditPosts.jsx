@@ -8,13 +8,17 @@ import commentIcon from '../../assets/images/posts/comment.svg';
 import { redditPosts, subredditPath, loadPostsFailed, searchTerm, isNewSearch, setNewSearch } from './redditPostsSlice';
 import { getSubredditPostsApi, getSearchPostsApi } from'../../Api/redditApi';
 import { timeSincePost, numberWithCommas }  from '../../utilities/utilities';
-
+import { communitiesVisible } from '../Header/headerSlice';
 
 export function RedditPosts() {
    
     const [tooltipVisible, setTooltipVisible ] = useState(false);
 
-   const dispatch = useDispatch();
+    //hides subreddits stats when side bar is open on screen sizes < 768px
+    const displayPostStats = !(useSelector(communitiesVisible));
+    console.log(displayPostStats);
+
+    const dispatch = useDispatch();
 
     //Required for subreddit link posts
     const selectedSubredditPath = useSelector(subredditPath);
@@ -24,7 +28,6 @@ export function RedditPosts() {
     const searchPhrase = useSelector(searchTerm);
     const newSearch = useSelector(isNewSearch);
     const posts = useSelector(redditPosts); 
-    console.log(posts);
     
     useEffect(() => {
         dispatch(getSubredditPostsApi(selectedSubredditPath));
@@ -56,8 +59,9 @@ export function RedditPosts() {
                 {posts.map(post => (
                 <div className={styles.post}  key={post.id}>
                     <div className={styles.postContent}> 
-                        
-                        {/* Post Metrics Section*/}
+
+                        {/* Post Metrics Section*/} 
+                        {displayPostStats && (
                         <div className={styles.postStatsSection}> 
                             <p id={styles.postStatsHeader}>Post Votes</p>
 
@@ -125,12 +129,13 @@ export function RedditPosts() {
                                 </tbody>
                             </table>
                         </div>
+                        )}
                     
                         {/* Post content section*/}
 
                         {/* Type of media available determines if image, video or just text is displayed*/}
                         
-                        <div className={styles.postContent}>
+                        <div className={`${styles.postContent} ${!(displayPostStats) ? styles.postNoStats : " "}`}>
                             
                             {post.selftext_html !==null && (
                             <div>
@@ -202,10 +207,10 @@ export function RedditPosts() {
                 
                     {/* Footer at bottom of each post */}
 
-                        <div className={styles.postFooterContainer}>
-                        <p>Community: {post.subreddit}</p>
-                        <p>Author: {post.author}</p>
-                        <p>{timeSincePost(post.created)}</p>
+                        <div className={`${styles.postFooterContainer} ${!(displayPostStats)? styles.footerNoStats : " "}`}>
+                            <p>Community: {post.subreddit}</p>
+                            <p>Author: {post.author}</p>
+                            <p>{timeSincePost(post.created)}</p>
                                 <div className={styles.commentContainer}>
                                     <img src={commentIcon} alt="Total post comments" /> 
                                     <p className={styles.totalComments}>{numberWithCommas(post.num_comments)}</p>
