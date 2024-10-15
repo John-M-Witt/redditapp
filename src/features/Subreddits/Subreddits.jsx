@@ -7,31 +7,31 @@ import { setSelectedSubredditPath } from '../RedditPosts/redditPostsSlice';
 import { communitiesVisible } from '../Header/headerSlice';
 
 export function Subreddits () {
-    const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
+    //mediaQuery.matches returns True if browser viewport is greater than 768px  
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const [ isSmallWindow, setIsSmallWindow ] = useState(mediaQuery.matches);
     
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getSubredditsApi());
-       
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        
-        window.addEventListener('resize', handleResize); 
-        
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [dispatch]); 
+        }, [dispatch]); 
+
+    useEffect(() => {
+        const windowHandler = event => setIsSmallWindow(event.matches);
+        mediaQuery.addEventListener('change', windowHandler);
+        // console.log(`MediaQuery: ${mediaQuery.matches}`);  
+        // console.log(`Display Communities: ${displayCommunities}`)
+  
+        return () => mediaQuery.removeEventListener('change', windowHandler);
+    }, [mediaQuery]);
 
     const subredditLoadFailed = useSelector(failedToLoadSubreddits);
     const subreddits = useSelector(selectSubreddits);
     const displayCommunities = useSelector(communitiesVisible);
-    
     const handleSubredditClick = subredditPath => dispatch(setSelectedSubredditPath(subredditPath));
     
-
+    
     return (
         subredditLoadFailed ? (
             <div className={`${styles.subredditsContainer} ${styles.subredditsContainerError}`}> 
@@ -41,7 +41,7 @@ export function Subreddits () {
             </div>
         ) : (
         
-        (windowWidth > 768 || displayCommunities) && (
+        (!(isSmallWindow) || displayCommunities) && (
         <div className={styles.subredditsContainer}>
             <div className={styles.sidebarNavItems} > 
                 <p className={styles.header}>Reddit Communities</p>

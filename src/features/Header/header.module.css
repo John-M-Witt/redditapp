@@ -62,9 +62,6 @@ input[type="text"] {
 .searchIcon:hover{
     cursor: pointer;
 }
-.communities{
-    display: none;
-}
 
 @media only screen and (max-width: 768px) {
     #headerContainer {

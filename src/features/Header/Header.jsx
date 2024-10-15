@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import redditJrIcon from '../../assets/images/headerIcons/redditJr.jpg'
 import searchIconBlack from '../../assets/images/headerIcons/searchIconBlack.svg';
 import searchIconGreen from '../../assets/images/headerIcons/searchIconGreen.svg';
-import deleteSearchTermIcon from '../../assets/images/headerIcons/deleteSearchTerm.svg';
+import clearSearchIcon from '../../assets/images/headerIcons/deleteSearchTerm.svg';
 import styles from './header.module.css';
 import { setNewSearch, setSearchTerm, deleteSearchTerm } from '../RedditPosts/redditPostsSlice';
 import { formatSearchPhrase } from '../../utilities/utilities';
 import { communitiesVisible, setCommunityVisible } from './headerSlice';
+import { useMediaQuery } from '../../useMediaQuery';
 
 export function Header() {
+    
+    const isSmallWindow = useMediaQuery('(max-width: 768px)');
+       
     const [localSearchTerm, setLocalSearchTerm] = useState('');
 
     const displayCommunities = useSelector(communitiesVisible);
@@ -24,7 +28,6 @@ export function Header() {
     const handleSearchEnter = e => {
         if(e.key === 'Enter') {
             e.preventDefault();
-            // console.log(e);
             dispatch(setNewSearch(true));
             const formattedSearchPhrase = formatSearchPhrase(localSearchTerm);
             dispatch(setSearchTerm(formattedSearchPhrase));
@@ -43,14 +46,14 @@ const handleSearchIconClick = (e) => {
 }
 
     const handleDeleteSearchTerm = () => {
-        setLocalSearchTerm('');
+        setLocalSearchTerm("");
         dispatch(deleteSearchTerm());
     }
 
     const handleCommunitiesClick = () => {
         dispatch(setCommunityVisible(!displayCommunities));
     }
-
+ 
     return (
         <header id={styles.headerContainer}> {/* Flex box */}
             <div className={styles.titleIconContainer}> {/* Flex item & Flex box */}
@@ -62,7 +65,7 @@ const handleSearchIconClick = (e) => {
                     <input 
                         placeholder="Search" 
                         type="text" 
-                        name='localSearchTerm'
+                        name="localSearchTerm"
                         value={localSearchTerm}
                         onChange={handleSearchTermChange}
                         onKeyDown={handleSearchEnter}
@@ -71,12 +74,12 @@ const handleSearchIconClick = (e) => {
                         <button 
                             className={styles.deleteButton}
                             type='button'
-                            id="search-delete-button"
                             onClick={handleDeleteSearchTerm}
+                            data-testid='clear-search-button'
                         >
-                            <img src={deleteSearchTermIcon} alt='delate search phrase' />    
+                            <img src={clearSearchIcon} alt='clear search icon' />    
                         </button> 
-                )}
+                    )}
                 </form>
                 <button>
                     <img 
@@ -85,13 +88,15 @@ const handleSearchIconClick = (e) => {
                     alt='Search Icon'
                     onClick={handleSearchIconClick}
                     />
-                </button>     
+                </button>
+
+                {isSmallWindow && (
                 <button 
                     className={styles.communities}
                     onClick = {handleCommunitiesClick} >
                 Communities
                 </button>
-            
+                )}
             </div>
             
         </header>

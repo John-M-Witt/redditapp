@@ -16,7 +16,7 @@ export function RedditPosts() {
 
     //hides subreddits stats when side bar is open on screen sizes < 768px
     const displayPostStats = !(useSelector(communitiesVisible));
-    console.log(displayPostStats);
+    // console.log(`DisplayPostStats: ${displayPostStats}`);
 
     const dispatch = useDispatch();
 

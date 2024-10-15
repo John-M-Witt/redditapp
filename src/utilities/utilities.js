@@ -61,7 +61,26 @@ export const formatSearchPhrase = (searchInput = null) => {
     } else {
         return searchInput;
     }
-}
+};
+
+// Creates a reusable matchMedia mock function, which returns a MediaQueryList object.  
+
+export const createMatchMedia = (matches) => {
+    return jest.fn().mockImplementation((query) => ({
+        matches,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+    }));
+};
+
+export const getMediaQueryMatches = (query) => {
+    return window.matchMedia(query).matches;
+};
 
 
 
