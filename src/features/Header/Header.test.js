@@ -108,7 +108,6 @@ it('Renders an "X" search delete icon only when a user inputs 3+ characters into
     }));
 });
 
-
 describe('Header component with Media Query', () => {
     const windowResize = (width) => {
         window.innerWidth = width;

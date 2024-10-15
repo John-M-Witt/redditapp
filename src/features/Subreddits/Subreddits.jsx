@@ -5,26 +5,18 @@ import { selectSubreddits, failedToLoadSubreddits } from './subredditsSlice';
 import { getSubredditsApi } from '../../Api/redditApi';
 import { setSelectedSubredditPath } from '../RedditPosts/redditPostsSlice';
 import { communitiesVisible } from '../Header/headerSlice';
+import { useMediaQuery } from '../../useMediaQuery';
 
 export function Subreddits () {
     //mediaQuery.matches returns True if browser viewport is greater than 768px  
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    const [ isSmallWindow, setIsSmallWindow ] = useState(mediaQuery.matches);
-    
+   
+    const isSmallWindow = useMediaQuery('(max-width: 768px)');
+        
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getSubredditsApi());
         }, [dispatch]); 
-
-    useEffect(() => {
-        const windowHandler = event => setIsSmallWindow(event.matches);
-        mediaQuery.addEventListener('change', windowHandler);
-        // console.log(`MediaQuery: ${mediaQuery.matches}`);  
-        // console.log(`Display Communities: ${displayCommunities}`)
-  
-        return () => mediaQuery.removeEventListener('change', windowHandler);
-    }, [mediaQuery]);
 
     const subredditLoadFailed = useSelector(failedToLoadSubreddits);
     const subreddits = useSelector(selectSubreddits);

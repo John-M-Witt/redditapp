@@ -10,10 +10,10 @@ export const useMediaQuery = (query) => {
         const mediaQueryList = window.matchMedia(query);
         const documentChangeHandler = () => setMatches(mediaQueryList.matches);
 
-        mediaQueryList.addEventListener ? mediaQueryList.addEventListener('change', documentChangeHandler) : mediaQueryList.addListener('change', documentChangeHandler);
+        mediaQueryList.addEventListener('change', documentChangeHandler);
 
         return () => {
-           mediaQueryList.removeEventListener ? mediaQueryList.removeEventListener('change', documentChangeHandler) :  mediaQueryList.removeListener('change', documentChangeHandler);
+            mediaQueryList.removeEventListener('change', documentChangeHandler);
         };
     }, [query]);
 
