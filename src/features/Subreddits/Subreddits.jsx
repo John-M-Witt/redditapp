@@ -8,8 +8,6 @@ import { communitiesVisible } from '../Header/headerSlice';
 import { useMediaQuery } from '../../useMediaQuery';
 
 export function Subreddits () {
-    //mediaQuery.matches returns True if browser viewport is greater than 768px  
-   
     const isSmallWindow = useMediaQuery('(max-width: 768px)');
         
     const dispatch = useDispatch();
